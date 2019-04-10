@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ln.demo.provider.system.dao.ArticleDAO">
+    <resultMap id="articleMap" type="Article">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="author" property="author" />
+        <result column="display_time" property="displayTime" />
+        <result column="importance" property="importance" />
+        <result column="content_short" property="contentShort" />
+        <result column="content" property="content" />
+        <result column="image_uri" property="imageUri" />
+        <result column="status" property="status" />
+        <result column="comment_disabled" property="commentDisabled" />
+        <result column="platforms" property="platforms" />
+        <result column="source_uri" property="sourceUri" />
+    </resultMap>
+
+    <select id="countArticle" parameterType="Map" resultType="int">
+        SELECT COUNT(*) FROM sys_article r
+    </select>
+    
+    <select id="listArticle" parameterType="PageRequest" resultMap="articleMap">
+        SELECT a.*
+        FROM sys_article a
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+    
+    <select id="getById" resultMap="articleMap">
+        SELECT *
+        FROM sys_article 
+        WHERE id=#{id}
+    </select>
+    
+    <update id="updateArticle">
+        UPDATE sys_article
+        SET title=#{title},author=#{author},display_time=#{displayTime},importance=#{importance},content_short=#{contentShort},
+            content=#{content},image_uri=#{imageUri},status=#{status},comment_disabled=#{commentDisabled},platforms=#{platforms},source_uri=#{sourceUri}
+        WHERE id=#{id}
+    </update>
+    
+    <insert id="saveArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+           title,author,display_time,importance,content_short,content,image_uri,status,comment_disabled,platforms,source_uri
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+           #{title},#{author},#{displayTime},#{importance},#{contentShort},#{content},#{imageUri},#{status},#{commentDisabled},#{platforms},#{sourceUri}     
+        </trim>
+    </insert>    
+    
+    <delete id="removeArticle">
+        DELETE FROM sys_article WHERE id=#{id}
+    </delete>
+   
+</mapper>  
