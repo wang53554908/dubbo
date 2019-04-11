@@ -25,7 +25,7 @@
 	<bean id="articleService" class="com.ln.demo.provider.system.service.ArticleServiceImpl" />
 	<dubbo:service interface="com.ln.demo.api.system.service.ArticleService" ref="articleService" />
 
-	<!-- 使用zookeeper注册中心暴露服务地址  -->
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<dubbo:registry address="zookeeper://172.19.0.10:2181" />
 
 	<!-- 使用multicast广播注册中心暴露服务地址 -->
